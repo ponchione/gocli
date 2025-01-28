@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gocli/core"
 	"gocli/util"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -57,7 +58,12 @@ func Touch(args []string) error {
 	if err != nil {
 		return fmt.Errorf("failed to create file %s: %v", filePath, err)
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			log.Fatalf("error occured when closing file. Error: %v", err)
+		}
+	}(file)
 
 	fmt.Printf("File created at: %s\n", filePath)
 	return nil

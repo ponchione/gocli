@@ -20,18 +20,18 @@ func Roll(args []string) error {
 		return err
 	}
 
-	min, err1 := strconv.Atoi(args[0])
-	max, err2 := strconv.Atoi(args[1])
+	mini, err1 := strconv.Atoi(args[0])
+	maxi, err2 := strconv.Atoi(args[1])
 
 	if err1 != nil || err2 != nil {
 		return fmt.Errorf("couldn't convert input(s). Please enter valid integers")
 	}
 
-	if min > max {
+	if mini > maxi {
 		return fmt.Errorf("min value cannot be greater than max value")
 	}
 
-	random := rand.Intn(max-min+1) + min
+	random := rand.Intn(maxi-mini+1) + mini
 	fmt.Printf("roll = %d", random)
 
 	return nil
