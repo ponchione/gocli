@@ -6,10 +6,15 @@ import (
 )
 
 type HelloCommand struct {
+	Name        string
+	Description string
 }
 
 func init() {
-	core.Commands["hello"] = &HelloCommand{}
+	core.Commands["hello"] = &HelloCommand{
+		Name:        "hello",
+		Description: "prints Hello, World!",
+	}
 }
 
 func (h *HelloCommand) Execute(args []string) error {
@@ -24,5 +29,5 @@ func (h *HelloCommand) Execute(args []string) error {
 func (h *HelloCommand) Help() string {
 	fmt.Println("Usage: hello")
 	fmt.Println("Sanity check to make sure gocli is loaded in terminal.")
-	return ""
+	return h.Description
 }
