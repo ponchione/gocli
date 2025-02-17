@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"gocli/core"
-	"gocli/util"
 	"log"
 	"os"
 	"path/filepath"
@@ -22,10 +21,6 @@ func init() {
 }
 
 func (t *TouchCommand) Execute(args []string) error {
-	if err := util.ValidateArgs(args, "touch requires at least one argument."); err != nil {
-		return err
-	}
-
 	if len(args) > 2 {
 		return fmt.Errorf("touch only take two arguments: file name | path(optional)")
 	}
@@ -63,7 +58,7 @@ func (t *TouchCommand) Execute(args []string) error {
 		return fmt.Errorf("failed to create file %s: %v", filePath, err)
 	}
 	defer func(file *os.File) {
-		err := file.Close()
+		err = file.Close()
 		if err != nil {
 			log.Fatalf("error occured when closing file. Error: %v", err)
 		}

@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"gocli/core"
-	"gocli/util"
 	"math/rand"
 	"strconv"
 )
@@ -51,10 +50,6 @@ func (r *RollCommand) Help() string {
 }
 
 func validateNumberArgs(args []string) error {
-	if err := util.ValidateArgs(args, ""); err != nil {
-		return err
-	}
-
 	if len(args) < 2 {
 		return fmt.Errorf("roll requires at least 2 integers")
 	}
