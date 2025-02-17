@@ -4,23 +4,35 @@ import (
 	"fmt"
 	_ "gocli/cmd"
 	"gocli/core"
+	"log"
 	"os"
 )
 
 func main() {
-	commandName := os.Args[1]
+	if len(os.Args) == 0 {
+		showUsage()
+		log.Fatalf("Issue")
+	}
 
-	if command, exists := core.Commands[commandName]; exists {
-		if err := command.Execute(os.Args[2:]); err != nil {
-			fmt.Printf("Error: %v\n", err)
-			os.Exit(1)
-		}
-	} else {
-		fmt.Printf("Unknown command: %s\n", commandName)
-		fmt.Println("Available commands: ")
-		for _, cmd := range core.Commands {
-			fmt.Printf("  %s: %s\n", cmd.Name, cmd.Description)
-		}
+	cmdName := os.Args[1]
+	cmd, exists := core.Commands[cmdName]
+	if !exists {
+		fmt.Printf("Unknown command: %s\n\n", cmdName)
+		showUsage()
 		os.Exit(1)
+	}
+
+	err := cmd.Execute(os.Args[2:])
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func showUsage() {
+	fmt.Println("Usage: mycli <command> [arguments]")
+	fmt.Println("\nAvailable commands:")
+	for name, cmd := range core.Commands {
+		fmt.Printf("  %-10s %s\n", name, cmd.Help())
 	}
 }

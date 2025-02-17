@@ -9,15 +9,19 @@ import (
 	"path/filepath"
 )
 
-func init() {
-	core.RegisterCommand(
-		"ex",
-		"command to open the file explore at specified location",
-		Explorer,
-		ExplorerHelp)
+type ExCommand struct {
+	Name        string
+	Description string
 }
 
-func Explorer(args []string) error {
+func init() {
+	core.Commands["ex"] = &ExCommand{
+		Name:        "ex",
+		Description: "command to open the file explore at specified location",
+	}
+}
+
+func (e *ExCommand) Execute(args []string) error {
 	if len(args) > 1 {
 		return fmt.Errorf("ex only accepts one possible command: path (optional)")
 	}
@@ -58,8 +62,9 @@ func Explorer(args []string) error {
 	return nil
 }
 
-func ExplorerHelp() {
+func (e *ExCommand) Help() string {
 	fmt.Println("Usage: ex <path>(optional)")
 	fmt.Println("Example: ex . will open the file explorer at current directory level")
 	fmt.Println("command to open the file explore at specified location")
+	return e.Description
 }

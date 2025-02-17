@@ -5,15 +5,14 @@ import (
 	"gocli/core"
 )
 
-func init() {
-	core.RegisterCommand(
-		"hello",
-		"This commands prints Hello, World!",
-		Hello,
-		HelloHelp)
+type HelloCommand struct {
 }
 
-func Hello(args []string) error {
+func init() {
+	core.Commands["hello"] = &HelloCommand{}
+}
+
+func (h *HelloCommand) Execute(args []string) error {
 	if len(args) > 0 {
 		return fmt.Errorf("hello() expects no arguments, but got: %d", len(args))
 	}
@@ -22,7 +21,8 @@ func Hello(args []string) error {
 	return nil
 }
 
-func HelloHelp() {
+func (h *HelloCommand) Help() string {
 	fmt.Println("Usage: hello")
 	fmt.Println("Sanity check to make sure gocli is loaded in terminal.")
+	return ""
 }

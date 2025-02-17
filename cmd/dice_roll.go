@@ -8,15 +8,20 @@ import (
 	"strconv"
 )
 
-func init() {
-	core.RegisterCommand("roll",
-		"roll command returns a random number between the user specified range (must be integers)",
-		Roll,
-		RollHelp)
+type RollCommand struct {
+	Name        string
+	Description string
 }
 
-func Roll(args []string) error {
-	if err := ValidateNumberArgs(args); err != nil {
+func init() {
+	core.Commands["roll"] = &RollCommand{
+		Name:        "roll",
+		Description: "Generates a random number between the specified range.",
+	}
+}
+
+func (r *RollCommand) Execute(args []string) error {
+	if err := validateNumberArgs(args); err != nil {
 		return err
 	}
 
@@ -37,13 +42,15 @@ func Roll(args []string) error {
 	return nil
 }
 
-func RollHelp() {
+func (r *RollCommand) Help() string {
 	fmt.Println("Usage: mycli roll <min> <max>")
 	fmt.Println("Example: mycli roll 1 6")
 	fmt.Println("Generates a random number between the specified range.")
+
+	return r.Description
 }
 
-func ValidateNumberArgs(args []string) error {
+func validateNumberArgs(args []string) error {
 	if err := util.ValidateArgs(args, ""); err != nil {
 		return err
 	}

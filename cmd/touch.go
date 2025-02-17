@@ -9,15 +9,19 @@ import (
 	"path/filepath"
 )
 
-func init() {
-	core.RegisterCommand(
-		"touch",
-		"touch command creates a file",
-		Touch,
-		TouchHelp)
+type TouchCommand struct {
+	Name        string
+	Description string
 }
 
-func Touch(args []string) error {
+func init() {
+	core.Commands["touch"] = &TouchCommand{
+		Name:        "touch",
+		Description: "touch is used to create a file via command line.",
+	}
+}
+
+func (t *TouchCommand) Execute(args []string) error {
 	if err := util.ValidateArgs(args, "touch requires at least one argument."); err != nil {
 		return err
 	}
@@ -69,8 +73,9 @@ func Touch(args []string) error {
 	return nil
 }
 
-func TouchHelp() {
+func (t *TouchCommand) Help() string {
 	fmt.Println("Usage: touch <file> <path>(optional)")
 	fmt.Println("Example: touch myText.txt will create a text file called myText at the current directory")
 	fmt.Println("touch is used to create a file via command line.")
+	return t.Description
 }
