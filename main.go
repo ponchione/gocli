@@ -30,7 +30,7 @@ func main() {
 }
 
 func showUsage() {
-	fmt.Println("Usage: mycli <command> [arguments]")
+	fmt.Println("Usage: gocli <command> [arguments]")
 	fmt.Println("\nAvailable commands:")
 	for name, cmd := range core.Commands {
 		fmt.Printf("  %-10s %s\n", name, cmd.Help())

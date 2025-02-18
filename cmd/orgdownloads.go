@@ -22,7 +22,13 @@ func init() {
 }
 
 var extensions = map[string]bool{
-	"": true,
+	".zip":  true,
+	".png":  true,
+	".jpeg": true,
+	".jpg":  true,
+	".msi":  true,
+	".txt":  true,
+	".pdf":  true,
 }
 
 func (o *OrganizeCommand) Execute(args []string) error {
