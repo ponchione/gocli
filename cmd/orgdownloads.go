@@ -68,7 +68,7 @@ func (o *OrganizeCommand) Execute(args []string) error {
 			continue
 		}
 
-		fmt.Printf("Moved %s to %s\n", file.Name(), targetDir)
+		fmt.Printf("Moved %s to %s\n", file.Name(), filepath.Base(targetDir))
 
 	}
 

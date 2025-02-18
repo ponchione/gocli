@@ -42,8 +42,8 @@ func (r *RollCommand) Execute(args []string) error {
 }
 
 func (r *RollCommand) Help() string {
-	fmt.Println("Usage: mycli roll <min> <max>")
-	fmt.Println("Example: mycli roll 1 6")
+	fmt.Println("Usage: gocli roll <min> <max>")
+	fmt.Println("Example: gocli roll 1 6")
 	fmt.Println("Generates a random number between the specified range.")
 
 	return r.Description
